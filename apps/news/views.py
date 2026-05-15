@@ -1,6 +1,14 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
+from .models import Article
+from .serializers import ArticleSerializer
+from rest_framework.generics import (
+    ListCreateAPIView, RetrieveUpdateDestroyAPIView
+)
 
-class ArticleListView(APIView):
-    def get(self, request):
-        return Response({"message": "RealNews API ishlayapti"})
+class ArticleListCreateGenericAPIView(ListCreateAPIView):
+    queryset = Article.objects.all()
+    serializer_class =ArticleSerializer
+
+class ArticleDetailGenericAPIView(RetrieveUpdateDestroyAPIView):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+    lookup_field = 'slug'
